@@ -10,6 +10,18 @@ df = pd.read_csv("patient_data.csv")
 print("First 5 rows:")
 print(df.head())
 
+# -------------------------------------------------
+# Fix inconsistent values
+# -------------------------------------------------
+
+df["Whendiagnoused"] = df["Whendiagnoused"].replace({
+
+    "1-5 Years": "1 - 5 Years",
+    ">5 Years": ">5 Years",
+    "<1 Year": "<1 Year"
+
+})
+
 # Step 2: Convert Categorical Columns to Numbers
 label_encoders = {}
 
@@ -21,18 +33,26 @@ for column in df.columns:
 
 # Step 3: Separate Features and Target
 X = df.drop("Stages", axis=1)
+
 y = df["Stages"]
 
 # Step 4: Train-Test Split
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
 )
 
 # Step 5: Train Model
 model = LogisticRegression(max_iter=1000)
+
 model.fit(X_train, y_train)
 
 # Step 6: Save Model
-pickle.dump((model, label_encoders), open("hypertension_model.pkl", "wb"))
+pickle.dump(
+    (model, label_encoders),
+    open("hypertension_model.pkl", "wb")
+)
 
 print("Model trained and saved successfully!")

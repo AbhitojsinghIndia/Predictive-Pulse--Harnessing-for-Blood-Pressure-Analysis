@@ -1,104 +1,180 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Hypertension Prediction</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
-    <h2>Hypertension Stage Prediction</h2>
+    <div class="background-animation"></div>
 
-    <form action="/predict" method="post">
+    <div class="container">
 
-        Gender:
-        <select name="C">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select><br><br>
+        <h1>🩺 Hypertension Prediction System</h1>
 
-        Age:
-        <select name="Age">
-            <option value="18-34">18-34</option>
-            <option value="35-50">35-50</option>
-            <option value="51-64">51-64</option>
-            <option value="65+">65+</option>
-        </select><br><br>
+        <p class="subtitle">
+            AI Based Blood Pressure Risk Analysis
+        </p>
 
-        History:
-        <select name="History">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select><br><br>
+        <form action="/predict" method="post">
 
-        Patient:
-        <select name="Patient">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select><br><br>
+            <div class="form-grid">
 
-        Take Medication:
-        <select name="TakeMedication">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>Gender</label>
+                    <select name="C">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
 
-        Severity:
-        <select name="Severity">
-            <option value="Mild">Mild</option>
-            <option value="Moderate">Moderate</option>
-            <option value="Severe">Severe</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>Age</label>
+                    <select name="Age">
+                        <option value="18-34">18-34</option>
+                        <option value="35-50">35-50</option>
+                        <option value="51-64">51-64</option>
+                        <option value="65+">65+</option>
+                    </select>
+                </div>
 
-        Breath Shortness:
-        <select name="BreathShortness">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>History</label>
+                    <select name="History">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
 
-        Visual Changes:
-        <select name="VisualChanges">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>Patient</label>
+                    <select name="Patient">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
 
-        Nose Bleeding:
-        <select name="NoseBleeding">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>Take Medication</label>
+                    <select name="TakeMedication">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
 
-        When Diagnosed:
-        <select name="Whendiagnoused">
-            <option value="<1 Year"><1 Year</option>
-            <option value="1-5 Years">1-5 Years</option>
-            <option value="5+ Years">5+ Years</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>Severity</label>
+                    <select name="Severity">
+                        <option value="Mild">Mild</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="Severe">Severe</option>
+                    </select>
+                </div>
 
-        Systolic:
-        <select name="Systolic">
-            <option value="111 - 120">111 - 120</option>
-            <option value="121 - 130">121 - 130</option>
-            <option value="131 - 140">131 - 140</option>
-            <option value="141+">141+</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>Breath Shortness</label>
+                    <select name="BreathShortness">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
 
-        Diastolic:
-        <select name="Diastolic">
-            <option value="81 - 90">81 - 90</option>
-            <option value="91 - 100">91 - 100</option>
-            <option value="101+">101+</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>Visual Changes</label>
+                    <select name="VisualChanges">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
 
-        Controlled Diet:
-        <select name="ControlledDiet">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select><br><br>
+                <div class="input-box">
+                    <label>Nose Bleeding</label>
+                    <select name="NoseBleeding">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
 
-        <input type="submit" value="Predict">
+                <!-- FIXED SECTION -->
 
-    </form>
+                <div class="input-box">
 
-    <h3>{{ prediction_text }}</h3>
+                    <label>When Diagnosed</label>
+
+                    <select name="Whendiagnoused">
+
+                        <option value="<1 Year">
+                            Less than 1 Year
+                        </option>
+
+                        <option value="1 - 5 Years">
+                            1 - 5 Years
+                        </option>
+
+                        <option value=">5 Years">
+                            5+ Years
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-box">
+                    <label>Systolic</label>
+                    <select name="Systolic">
+                        <option value="111 - 120">111 - 120</option>
+                        <option value="121 - 130">121 - 130</option>
+                        <option value="131 - 140">131 - 140</option>
+                        <option value="141+">141+</option>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <label>Diastolic</label>
+                    <select name="Diastolic">
+                        <option value="81 - 90">81 - 90</option>
+                        <option value="91 - 100">91 - 100</option>
+                        <option value="101+">101+</option>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <label>Controlled Diet</label>
+                    <select name="ControlledDiet">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="submit" id="predictBtn">
+                Predict Stage
+            </button>
+
+        </form>
+
+        {% if prediction_text %}
+
+        <div class="result-box">
+            <h2>{{ prediction_text }}</h2>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
+
 </html>

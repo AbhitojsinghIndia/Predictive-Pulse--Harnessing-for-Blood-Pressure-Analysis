@@ -3,17 +3,46 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Hypertension Prediction</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🩺 HyperCare AI
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/predict">Prediction</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </div>
+
+    </nav>
+
+    <!-- Floating Particles -->
+
+    <div class="particles"></div>
+
+    <!-- Background Animation -->
 
     <div class="background-animation"></div>
 
@@ -25,86 +54,143 @@
             AI Based Blood Pressure Risk Analysis
         </p>
 
-        <form action="/predict" method="post">
+        <form action="/predict-result"
+              method="post"
+              id="predictionForm">
 
             <div class="form-grid">
 
                 <div class="input-box">
+
                     <label>Gender</label>
+
                     <select name="C">
+
                         <option value="Male">Male</option>
+
                         <option value="Female">Female</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>Age</label>
+
                     <select name="Age">
+
                         <option value="18-34">18-34</option>
+
                         <option value="35-50">35-50</option>
+
                         <option value="51-64">51-64</option>
+
                         <option value="65+">65+</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>History</label>
+
                     <select name="History">
+
                         <option value="Yes">Yes</option>
+
                         <option value="No">No</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>Patient</label>
+
                     <select name="Patient">
+
                         <option value="Yes">Yes</option>
+
                         <option value="No">No</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>Take Medication</label>
+
                     <select name="TakeMedication">
+
                         <option value="Yes">Yes</option>
+
                         <option value="No">No</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>Severity</label>
+
                     <select name="Severity">
+
                         <option value="Mild">Mild</option>
+
                         <option value="Moderate">Moderate</option>
+
                         <option value="Severe">Severe</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>Breath Shortness</label>
+
                     <select name="BreathShortness">
+
                         <option value="Yes">Yes</option>
+
                         <option value="No">No</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>Visual Changes</label>
+
                     <select name="VisualChanges">
+
                         <option value="Yes">Yes</option>
+
                         <option value="No">No</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
-                    <label>Nose Bleeding</label>
-                    <select name="NoseBleeding">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
 
-                <!-- FIXED SECTION -->
+                    <label>Nose Bleeding</label>
+
+                    <select name="NoseBleeding">
+
+                        <option value="Yes">Yes</option>
+
+                        <option value="No">No</option>
+
+                    </select>
+
+                </div>
 
                 <div class="input-box">
 
@@ -129,36 +215,63 @@
                 </div>
 
                 <div class="input-box">
+
                     <label>Systolic</label>
+
                     <select name="Systolic">
+
                         <option value="111 - 120">111 - 120</option>
+
                         <option value="121 - 130">121 - 130</option>
+
                         <option value="131 - 140">131 - 140</option>
+
                         <option value="141+">141+</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>Diastolic</label>
+
                     <select name="Diastolic">
+
                         <option value="81 - 90">81 - 90</option>
+
                         <option value="91 - 100">91 - 100</option>
+
                         <option value="101+">101+</option>
+
                     </select>
+
                 </div>
 
                 <div class="input-box">
+
                     <label>Controlled Diet</label>
+
                     <select name="ControlledDiet">
+
                         <option value="Yes">Yes</option>
+
                         <option value="No">No</option>
+
                     </select>
+
                 </div>
 
             </div>
 
             <button type="submit" id="predictBtn">
-                Predict Stage
+
+                <span id="btnText">
+                    Predict Stage
+                </span>
+
+                <div class="loader"></div>
+
             </button>
 
         </form>
@@ -166,15 +279,71 @@
         {% if prediction_text %}
 
         <div class="result-box">
+
             <h2>{{ prediction_text }}</h2>
+
+            <h3 class="confidence-text">
+
+                Confidence: {{ confidence }}%
+
+            </h3>
+
+            <div class="risk-meter">
+
+                <div class="risk-fill"></div>
+
+            </div>
+
         </div>
 
         {% endif %}
+
+        <!-- Dashboard Chart -->
+
+        <div class="chart-container">
+
+            <h2 class="chart-title">
+
+                Hypertension Analysis Dashboard
+
+            </h2>
+
+            <canvas id="bpChart"></canvas>
+
+            <!-- Dynamic Chart Data -->
+
+            <script id="chart-labels" type="application/json">
+                {{ labels | tojson }}
+            </script>
+
+            <script id="chart-values" type="application/json">
+                {{ values | tojson }}
+            </script>
+
+        </div>
 
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
+<!--
+<footer class="footer">
 
+    <p>
+
+        © 2026 HyperCare AI |
+        Developed by Abhitoj Singh
+
+    </p>
+
+    <a href="https://github.com/AbhitojsinghIndia"
+       target="_blank">
+
+        GitHub Profile
+
+    </a>
+
+</footer>
+-->
 </html>
